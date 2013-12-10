@@ -11,8 +11,10 @@ function Registry(game, opts) {
 
 Registry.prototype.registerBlock = function(name, props) {
   var nextID = this.blockProps.length;
+  if (this.blockName2ID[name])
+    throw "registerBlock: duplicate block name "+name+", existing ID "+this.blockName2ID[name]+" attempted overwrite by "+nextID
   this.blockProps.push(props);
-  this.blockName2ID[name] = props;  // TODO: check overwrite
+  this.blockName2ID[name] = nextID;
 
   return nextID;
 };
