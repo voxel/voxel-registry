@@ -1,0 +1,5 @@
+# voxel-registry
+
+## License
+
+MIT
