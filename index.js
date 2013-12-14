@@ -13,6 +13,7 @@ Registry.prototype.registerBlock = function(name, props) {
   var nextID = this.blockProps.length;
   if (this.blockName2ID[name])
     throw "registerBlock: duplicate block name "+name+", existing ID "+this.blockName2ID[name]+" attempted overwrite by "+nextID
+  props.name = props.name || name;
   this.blockProps.push(props);
   this.blockName2ID[name] = nextID;
 
@@ -21,6 +22,10 @@ Registry.prototype.registerBlock = function(name, props) {
 
 Registry.prototype.getBlockID = function(name) {
   return this.blockName2ID[name];
+};
+
+Registry.prototype.getBlockName = function(blockID) {
+  return this.blockProps[blockID].name;
 };
 
 Registry.prototype.getBlockProps = function(name) {
