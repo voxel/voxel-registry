@@ -13,7 +13,14 @@ Registry.prototype.registerBlock = function(name, props) {
   var nextID = this.blockProps.length;
   if (this.blockName2ID[name])
     throw "registerBlock: duplicate block name "+name+", existing ID "+this.blockName2ID[name]+" attempted overwrite by "+nextID
+
+  // default properties
   props.name = props.name || name;
+  if (props.texture && !props.itemTexture) {
+    // use top of block texture as item texture by default
+    props.itemTexture = typeof props.texture === 'string' ? props.texture : props.texture[0];
+  }
+
   this.blockProps.push(props);
   this.blockName2ID[name] = nextID;
 
