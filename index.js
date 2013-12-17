@@ -7,12 +7,14 @@ module.exports = function(game, opts) {
 function Registry(game, opts) {
   this.blockProps = [ {} ];
   this.blockName2ID = { air:0 };
+
+  this.itemProps = {};
 }
 
 Registry.prototype.registerBlock = function(name, props) {
   var nextID = this.blockProps.length;
   if (this.blockName2ID[name])
-    throw "registerBlock: duplicate block name "+name+", existing ID "+this.blockName2ID[name]+" attempted overwrite by "+nextID
+    throw "registerBlock: duplicate block name "+name+", existing ID "+this.blockName2ID[name]+" attempted overwrite by "+nextID;
 
   // default properties
   props.name = props.name || name;
@@ -47,3 +49,17 @@ Registry.prototype.getBlockPropsAll = function(prop) {
   }
   return props;
 };
+
+
+Registry.prototype.registerItem = function(name, props) {
+  if (this.itemProps[name])
+    throw "registerItem: duplicate item name "+name+", existing properties: "+this.itemProps[name];
+
+  this.itemProps[name] = props;
+};
+
+Registry.prototype.getItemProps = function(name) {
+  return this.itemProps[name];
+};
+
+
