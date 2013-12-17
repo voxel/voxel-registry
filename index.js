@@ -54,12 +54,14 @@ Registry.prototype.getBlockPropsAll = function(prop) {
 Registry.prototype.registerItem = function(name, props) {
   if (this.itemProps[name])
     throw "registerItem: duplicate item name "+name+", existing properties: "+this.itemProps[name];
+  if (this.blockName2ID[name])
+    throw "registerItem: item name "+name+" conflicts with existing block name of ID "+this.blockName2ID[name];
 
   this.itemProps[name] = props;
 };
 
 Registry.prototype.getItemProps = function(name) {
-  return this.itemProps[name];
+  return this.itemProps[name] || this.getBlockProps(name); // blocks are implicitly also items
 };
 
 
