@@ -64,4 +64,7 @@ Registry.prototype.getItemProps = function(name) {
   return this.itemProps[name] || this.getBlockProps(name); // blocks are implicitly also items
 };
 
-
+// return true if this name is a block, false otherwise (may be an item)
+Registry.prototype.isBlock = function(name) {
+  return this.blockName2ID[name] !== undefined;
+};
