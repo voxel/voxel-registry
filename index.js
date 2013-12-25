@@ -6,6 +6,7 @@ module.exports = function(game, opts) {
 
 function Registry(game, opts) {
   this.game = game;
+  this.game.registry = this;
 
   this.blockProps = [ {} ];
   this.blockName2ID = { air:0 };
