@@ -20,16 +20,17 @@ translate between IDs and names using this module (see the source for details).
 
 Property names can be anything, but the following conventions are known:
 
-* texture:
-* hardness: used by [voxel-mine](https://github.com/deathcap/voxel-mine), required time to mine the block
-* itemDrop: used by [voxel-harvest](https://github.com/deathcap/voxel-harvest), name of item to drop when block is harvested
+* texture: textures for rendering voxels
+* hardness: required time to mine the block, used by [voxel-mine](https://github.com/deathcap/voxel-mine)
+* itemDrop: name of item to drop when block is harvested, used by [voxel-harvest](https://github.com/deathcap/voxel-harvest)
 
 
 Items are registered similarly:
 
     registry.registerItem(name, props);
 
-* itemTexture:
+* itemTexture: texture for rendering in an [inventory-window](https://github.com/deathcap/inventory-window)
+* maxDamage: maximum damage before a tool breaks, used by [voxel-harvest](https://github.com/deathcap/voxel-harvest), [inventory-window](https://github.com/deathcap/inventory-window)
 
 Blocks are implicitly considered items.
 
