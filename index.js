@@ -80,7 +80,7 @@ Registry.prototype.getItemTexture = function(name) {
   // TODO: different image categories, blocks, items may be in different folders
 
   // TODO: should this return a three.js image, instead of a URL? how about zipped or stitched texture packs?
-  return this.game.materials.texturePath + textureName + '.png';
+  return (this.game ? this.game.materials.texturePath : '') + textureName + '.png';
 };
 
 Registry.prototype.getItemPileTexture = function(itemPile) {
