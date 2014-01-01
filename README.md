@@ -2,6 +2,8 @@
 
 A shared registry for managing item and block IDs (voxel.js plugin)
 
+[![Build Status](https://travis-ci.org/deathcap/voxel-registry.png)](https://travis-ci.org/deathcap/voxel-registry)
+
 ## Usage
 
 Load with [voxel-plugins](https://github.com/deathcap/voxel-plugins), then get the registry instance:
