@@ -11,8 +11,6 @@ function Registry(game, opts) {
   this.blockName2ID = { air:0 };
 
   this.itemProps = {};
-
-  if (opts.registerDefaults) opts.registerDefaults(this);
 }
 
 Registry.prototype.registerBlock = function(name, props) {
