@@ -30,14 +30,9 @@ test('register block duplicate', function(t) {
   var registry = createRegistry();
 
   registry.registerBlock('dirt', {});
-  var caughtError = undefined;
-  try {
+  t.throws(function() {
     registry.registerBlock('dirt', {}); // duplicate block name
-  } catch (e) {
-    caughtError = e;
-  }
-
-  t.equals(caughtError !== undefined, true);
+  });
   t.end();
 });
 
@@ -53,13 +48,9 @@ test('register item', function(t) {
 test('item and block share same namespace', function(t) { 
   var r = createRegistry();
   r.registerBlock('foo', {});
-  var caughtError = undefined;
-  try {
+  t.throws(function() {
     r.registerItem('foo', {}); // conflicts with existing block name
-  } catch (e) {
-    caughtError = e;
-  }
-  t.equals(caughtError !== undefined, true);
+  });
 
   t.end();
 });
