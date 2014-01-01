@@ -1,0 +1,93 @@
+'use strict';
+
+var test = require('tape');
+var createRegistry = require('./');
+
+
+test('register block', function(t) {
+  var registry = createRegistry(); // doesn't need game nor opts
+
+  registry.registerBlock('dirt', {});
+  t.equals(registry.getBlockID('dirt'), 1); // note: actual number is implementation detail
+  t.equals(registry.getBlockName(1), 'dirt');
+
+  registry.registerBlock('grass', {});
+  t.equals(registry.getBlockID('grass'), 2);
+  t.equals(registry.getBlockName(2), 'grass');
+
+  t.end();
+});
+
+test('block properties', function(t) {
+  var registry = createRegistry();
+
+  registry.registerBlock('dirt', {hardness:5});
+  t.equals(registry.getBlockProps('dirt').hardness, 5);
+  t.end();
+});
+
+test('register block duplicate', function(t) {
+  var registry = createRegistry();
+
+  registry.registerBlock('dirt', {});
+  var caughtError = undefined;
+  try {
+    registry.registerBlock('dirt', {}); // duplicate block name
+  } catch (e) {
+    caughtError = e;
+  }
+
+  t.equals(caughtError !== undefined, true);
+  t.end();
+});
+
+test('register item', function(t) {
+  var registry = createRegistry();
+
+  registry.registerItem('tool', {speed:1000});
+  t.equals(registry.getItemProps('tool').speed, 1000);
+
+  t.end();
+});
+
+test('item and block share same namespace', function(t) { 
+  var r = createRegistry();
+  r.registerBlock('foo', {});
+  var caughtError = undefined;
+  try {
+    r.registerItem('foo', {}); // conflicts with existing block name
+  } catch (e) {
+    caughtError = e;
+  }
+  t.equals(caughtError !== undefined, true);
+
+  t.end();
+});
+
+test('is block?', function(t) {
+  var r = createRegistry();
+  r.registerBlock('block', {});
+  r.registerItem('item', {});
+
+  t.equals(r.isBlock('block'), true);
+  t.equals(r.isBlock('item'), false);
+  t.end();
+});
+
+test('blocks are implicitly items', function(t) {
+  var r = createRegistry();
+  r.registerBlock('foo', {bar:9});
+
+  t.equals(r.getBlockProps('foo').bar, 9);
+  t.equals(r.getItemProps('foo').bar, 9);
+  t.end();
+});
+
+test('but items not necessarily blocks', function(t) {
+  var r = createRegistry();
+  r.registerItem('tool', {speed:1});
+
+  t.equals(r.getBlockProps('tool') === undefined, true);
+  t.equals(r.getItemProps('tool').speed, 1);
+  t.end();
+});
