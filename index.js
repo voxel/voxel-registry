@@ -86,6 +86,19 @@ Registry.prototype.getItemTexture = function(name) {
   return (this.game ? this.game.materials.texturePath : '') + textureName + '.png';
 };
 
+Registry.prototype.getItemDisplayName = function(name) {
+  var props = this.getItemProps(name);
+  
+  if (!props) return '<unknown>';
+
+  if (props.displayName) return props.displayName;
+
+  // default is initial-uppercased internal name
+  var initialCap = name.substr(0, 1).toUpperCase();
+  var rest = name.substr(1);
+  return initialCap + rest;
+};
+
 Registry.prototype.getItemPileTexture = function(itemPile) {
   return this.getItemTexture(itemPile.item);
 };
