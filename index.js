@@ -8,35 +8,40 @@ function Registry(game, opts) {
   this.game = game;
 
   this.blockProps = [ {} ];
-  this.blockName2ID = { air:0 };
+  this.blockName2Index= { air:0 };
 
   this.itemProps = {};
 }
 
 Registry.prototype.registerBlock = function(name, props) {
-  var nextID = this.blockProps.length;
-  if (this.blockName2ID[name])
-    throw "registerBlock: duplicate block name "+name+", existing ID "+this.blockName2ID[name]+" attempted overwrite by "+nextID;
+  var nextIndex = this.blockProps.length;
+  if (this.blockName2Index[name])
+    throw "registerBlock: duplicate block name "+name+", existing index "+this.blockName2Index[name]+" attempted overwrite by "+nextIndex;
 
   // default properties
   props.name = props.name || name;
   this.blockProps.push(props);
-  this.blockName2ID[name] = nextID;
+  this.blockName2Index[name] = nextIndex;
 
-  return nextID;
+  return nextIndex;
 };
 
+// @deprecated in favor of getBlockIndex
 Registry.prototype.getBlockID = function(name) {
-  return this.blockName2ID[name];
+  return this.getBlockIndex(name);
 };
 
-Registry.prototype.getBlockName = function(blockID) {
-  return this.blockProps[blockID].name;
+Registry.prototype.getBlockIndex = function(name) {
+  return this.blockName2Index[name];
+};
+
+Registry.prototype.getBlockName = function(blockIndex) {
+  return this.blockProps[blockIndex].name;
 };
 
 Registry.prototype.getBlockProps = function(name) {
-  var blockID = this.getBlockID(name);
-  return this.blockProps[blockID];
+  var blockIndex = this.getBlockIndex(name);
+  return this.blockProps[blockIndex];
 };
 
 Registry.prototype.getBlockPropsAll = function(prop) {
@@ -51,8 +56,8 @@ Registry.prototype.getBlockPropsAll = function(prop) {
 Registry.prototype.registerItem = function(name, props) {
   if (this.itemProps[name])
     throw "registerItem: duplicate item name "+name+", existing properties: "+this.itemProps[name];
-  if (this.blockName2ID[name])
-    throw "registerItem: item name "+name+" conflicts with existing block name of ID "+this.blockName2ID[name];
+  if (this.blockName2Index[name])
+    throw "registerItem: item name "+name+" conflicts with existing block name of index"+this.blockName2Index[name];
 
   this.itemProps[name] = props;
 };
@@ -87,5 +92,5 @@ Registry.prototype.getItemPileTexture = function(itemPile) {
 
 // return true if this name is a block, false otherwise (may be an item)
 Registry.prototype.isBlock = function(name) {
-  return this.blockName2ID[name] !== undefined;
+  return this.blockName2Index[name] !== undefined;
 };
