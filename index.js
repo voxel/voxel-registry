@@ -107,3 +107,25 @@ Registry.prototype.getItemPileTexture = function(itemPile) {
 Registry.prototype.isBlock = function(name) {
   return this.blockName2Index[name] !== undefined;
 };
+
+// Texture blob URLs - requires https://github.com/deathcap/artpacks
+// TODO: move somewhere else?
+
+Registry.prototype.onTexturesReady = function(cb) {
+  if (!this.game.materials.artPacks) return;
+
+  if (this.game.materials.artPacks.isQuiescent())
+    cb();
+  else
+    this.game.materials.artPacks.on('loadedAll', cb);
+};
+
+Registry.prototype.getTextureURL = function(name) {
+  if (!this.game.materials.artPacks) return;
+
+  return this.game.materials.artPacks.getTexture(name);
+  // TODO: default texture if undefined
+};
+
+
+
