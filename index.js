@@ -73,8 +73,17 @@ Registry.prototype.getItemTexture = function(name) {
   if (textureName === undefined) {
     if (props.texture !== undefined) {
       // no item texture, use block texture
-      // TODO: 3D cube, maybe with CSS transforms, like https://github.com/shama/craft
-      textureName = typeof props.texture === 'string' ? props.texture : props.texture[0];
+      if (typeof props.texture === 'string') {
+        // simple texture
+        return this.getTextureURL(props.texture);
+      } else {
+        // 3D CSS cube using https://github.com/deathcap/cube-icon
+        // TODO: refactor. map over array?
+        return {
+          top: this.getTextureURL(props.texture[0]), 
+          side: this.getTextureURL(props.texture[1])
+        };
+      }
     } else {
       // TODO: default for missing texture
       textureName = 'gravel';
