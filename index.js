@@ -73,16 +73,13 @@ Registry.prototype.getItemTexture = function(name) {
   if (textureName === undefined) {
     if (props.texture !== undefined) {
       // no item texture, use block texture
-      if (typeof props.texture === 'string') {
+      
+      if (Array.isArray(props.texture)) {
+        // 3D CSS cube using https://github.com/deathcap/cube-icon
+        return props.texture.map(this.getTextureURL);
+      } else {
         // simple texture
         return this.getTextureURL(props.texture);
-      } else {
-        // 3D CSS cube using https://github.com/deathcap/cube-icon
-        // TODO: refactor. map over array?
-        return {
-          top: this.getTextureURL(props.texture[0]), 
-          side: this.getTextureURL(props.texture[1])
-        };
       }
     } else {
       // TODO: default for missing texture
