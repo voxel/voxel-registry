@@ -1,4 +1,5 @@
-// # vim: set shiftwidth=2 tabstop=2 softtabstop=2 expandtab:
+
+var toArray = require('toarray');
 
 module.exports = function(game, opts) {
   return new Registry(game, opts);
@@ -73,14 +74,8 @@ Registry.prototype.getItemTexture = function(name) {
   if (textureName === undefined) {
     if (props.texture !== undefined) {
       // no item texture, use block texture
-      
-      if (Array.isArray(props.texture)) {
-        // 3D CSS cube using https://github.com/deathcap/cube-icon
-        return props.texture.map(this.getTextureURL);
-      } else {
-        // simple texture
-        return this.getTextureURL(props.texture);
-      }
+      // 3D CSS cube using https://github.com/deathcap/cube-icon
+      return toArray(props.texture).map(this.getTextureURL);
     } else {
       // TODO: default for missing texture
       textureName = 'gravel';
