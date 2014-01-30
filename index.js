@@ -71,16 +71,19 @@ Registry.prototype.getItemProps = function(name) {
 
 Registry.prototype.getItemTexture = function(name) {
   var props = this.getItemProps(name);
-  var textureName = props.itemTexture;
 
-  if (textureName === undefined) {
-    if (props.texture !== undefined) {
-      // no item texture, use block texture
-      // 3D CSS cube using https://github.com/deathcap/cube-icon
-      return toArray(props.texture).map(this.getTextureURL);
-    } else {
-      // TODO: default for missing texture
-      textureName = 'gravel';
+  // TODO: default for missing texture
+  textureName = 'gravel';
+
+  if (props) {
+    var textureName = props.itemTexture;
+
+    if (textureName === undefined) {
+      if (props.texture !== undefined) {
+        // no item texture, use block texture
+        // 3D CSS cube using https://github.com/deathcap/cube-icon
+        return toArray(props.texture).map(this.getTextureURL);
+      }
     }
   }
 
