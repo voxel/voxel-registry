@@ -37,7 +37,9 @@ Registry.prototype.getBlockIndex = function(name) {
 };
 
 Registry.prototype.getBlockName = function(blockIndex) {
-  return this.blockProps[blockIndex].name;
+  var props = this.blockProps[blockIndex]
+    
+  return props ? props.name : '<index #'+blockIndex+'>';
 };
 
 Registry.prototype.getBlockProps = function(name) {
