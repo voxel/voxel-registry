@@ -17,7 +17,7 @@ function Registry(game, opts) {
 Registry.prototype.registerBlock = function(name, props) {
   var nextIndex = this.blockProps.length;
   if (this.blockName2Index[name])
-    throw "registerBlock: duplicate block name "+name+", existing index "+this.blockName2Index[name]+" attempted overwrite by "+nextIndex;
+    throw new Error('registerBlock: duplicate block name '+name+', existing index '+this.blockName2Index[name]+' attempted overwrite by '+nextIndex);
 
   // default properties
   props.name = props.name || name;
@@ -58,9 +58,9 @@ Registry.prototype.getBlockPropsAll = function(prop) {
 
 Registry.prototype.registerItem = function(name, props) {
   if (this.itemProps[name])
-    throw "registerItem: duplicate item name "+name+", existing properties: "+this.itemProps[name];
+    throw new Error('registerItem: duplicate item name '+name+', existing properties: '+this.itemProps[name]);
   if (this.blockName2Index[name])
-    throw "registerItem: item name "+name+" conflicts with existing block name of index"+this.blockName2Index[name];
+    throw new Error('registerItem: item name '+name+' conflicts with existing block name of index'+this.blockName2Index[name]);
 
   this.itemProps[name] = props;
 };
