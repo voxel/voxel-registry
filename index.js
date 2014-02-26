@@ -27,6 +27,27 @@ Registry.prototype.registerBlock = function(name, props) {
   return nextIndex;
 };
 
+Registry.prototype.registerBlocks = function(name, count, props) {
+  var startIndex = this.registerBlock(name + '#0', props);
+  var lastIndex = startIndex;
+
+  // register this many blocks
+
+  props.baseIndex = startIndex;
+  props.getOffsetIndex = function(n) {
+    return n - startIndex;
+  };
+
+  for (var i = 1; i < count; i += 1) {
+    var thisIndex = this.registerBlock(name + '#' + i, props); // same props for all
+
+    lastIndex = thisIndex;
+  }
+
+  props.offsetIndexCount = count;
+  props.lastIndex = lastIndex;
+};
+
 // @deprecated in favor of getBlockIndex
 Registry.prototype.getBlockID = function(name) {
   return this.getBlockIndex(name);

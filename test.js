@@ -36,6 +36,31 @@ test('register block duplicate', function(t) {
   t.end();
 });
 
+test('register blocks', function(t) {
+  var registry = createRegistry();
+
+  registry.registerBlocks('fence', 4, {foo:1})
+  //console.log(registry);
+
+  // registered as many IDs as requested
+  t.equals(registry.getBlockProps('fence#0').foo, 1)
+  t.equals(registry.getBlockProps('fence#1').foo, 1)
+  t.equals(registry.getBlockProps('fence#2').foo, 1)
+  t.equals(registry.getBlockProps('fence#3').foo, 1)
+
+  // all identical props
+  t.equals(registry.getBlockProps('fence#0'), registry.getBlockProps('fence#1'));
+  t.equals(registry.getBlockProps('fence#0'), registry.getBlockProps('fence#2'));
+  t.equals(registry.getBlockProps('fence#0'), registry.getBlockProps('fence#3'));
+
+  // index offsets
+  t.equals(registry.getBlockID('fence#0') - registry.getBlockProps('fence#0').baseIndex, 0);
+  t.equals(registry.getBlockID('fence#1') - registry.getBlockProps('fence#1').baseIndex, 1);
+  t.equals(registry.getBlockID('fence#2') - registry.getBlockProps('fence#2').baseIndex, 2);
+  t.equals(registry.getBlockID('fence#3') - registry.getBlockProps('fence#3').baseIndex, 3);
+  t.end()
+});
+
 test('register item', function(t) {
   var registry = createRegistry();
 
