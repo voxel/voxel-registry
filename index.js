@@ -9,7 +9,8 @@ function Registry(game, opts) {
   this.game = game;
 
   this.blockProps = [ {} ];
-  this.blockName2Index= { air:0 };
+  this.blockName2Index = { air:0 };
+  this.blockIndex2Name = ['air'];
 
   this.itemProps = {};
 }
@@ -19,10 +20,9 @@ Registry.prototype.registerBlock = function(name, props) {
   if (this.blockName2Index[name])
     throw new Error('registerBlock: duplicate block name '+name+', existing index '+this.blockName2Index[name]+' attempted overwrite by '+nextIndex);
 
-  // default properties
-  props.name = props.name || name;
   this.blockProps.push(props);
   this.blockName2Index[name] = nextIndex;
+  this.blockIndex2Name[nextIndex] = name;
 
   return nextIndex;
 };
@@ -58,9 +58,9 @@ Registry.prototype.getBlockIndex = function(name) {
 };
 
 Registry.prototype.getBlockName = function(blockIndex) {
-  var props = this.blockProps[blockIndex]
+  var name = this.blockIndex2Name[blockIndex];
     
-  return props ? props.name : '<index #'+blockIndex+'>';
+  return name ? name : '<index #'+blockIndex+'>';
 };
 
 Registry.prototype.getBlockProps = function(name) {
