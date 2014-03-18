@@ -71,7 +71,7 @@ Registry.prototype.getBlockProps = function(name) {
 Registry.prototype.getBlockPropsAll = function(prop) {
   var props = [];
   for (var i = 1; i < this.blockProps.length; ++i) {
-    props.push(this.getProp(this.blockProps[i].name, prop));
+    props.push(this.getProp(i, prop));
   }
   return props;
 };
@@ -92,10 +92,30 @@ Registry.prototype.getItemProps = function(name) {
 
 
 Registry.prototype.getProp = function(itemName, propName) {
-  var props = this.getItemProps(itemName);
+  var props;
+
+  if (typeof itemName === 'number') {
+    props = this.blockProps[itemName];
+  } else {
+    props = this.getItemProps(itemName);
+  }
+
   if (props === undefined) return undefined;
 
-  return props[propName];
+  var value = props[propName];
+
+  if (typeof value === 'function') {
+    // dynamic properties
+    var index = (typeof itemName === 'number') ? itemName : this.getBlockIndex(itemName);
+    if (index)  {
+      // call blocks with index offset argument
+      value = value.call(props, index - (props.baseIndex || index));
+    } else {
+      value = value.call(props);
+    }
+  }
+
+  return value;
 };
 
 Registry.prototype.getItemTexture = function(name) {
