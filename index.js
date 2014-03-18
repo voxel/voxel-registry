@@ -71,7 +71,7 @@ Registry.prototype.getBlockProps = function(name) {
 Registry.prototype.getBlockPropsAll = function(prop) {
   var props = [];
   for (var i = 1; i < this.blockProps.length; ++i) {
-    props.push(this.blockProps[i][prop]);
+    props.push(this.getProp(this.blockProps[i].name, prop));
   }
   return props;
 };
