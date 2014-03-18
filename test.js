@@ -23,6 +23,7 @@ test('block properties', function(t) {
 
   registry.registerBlock('dirt', {hardness:5});
   t.equals(registry.getBlockProps('dirt').hardness, 5);
+  t.equals(registry.getProp('dirt', 'hardness'), 5);
   t.end();
 });
 
@@ -66,6 +67,7 @@ test('register item', function(t) {
 
   registry.registerItem('tool', {speed:1000});
   t.equals(registry.getItemProps('tool').speed, 1000);
+  t.equals(registry.getProp('tool', 'speed'), 1000);
 
   t.end();
 });
@@ -96,6 +98,7 @@ test('blocks are implicitly items', function(t) {
 
   t.equals(r.getBlockProps('foo').bar, 9);
   t.equals(r.getItemProps('foo').bar, 9);
+  t.equals(r.getProp('foo', 'bar'), 9);
   t.end();
 });
 

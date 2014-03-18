@@ -90,21 +90,27 @@ Registry.prototype.getItemProps = function(name) {
   return this.itemProps[name] || this.getBlockProps(name); // blocks are implicitly also items
 };
 
-Registry.prototype.getItemTexture = function(name) {
-  var props = this.getItemProps(name);
 
+Registry.prototype.getProp = function(itemName, propName) {
+  var props = this.getItemProps(itemName);
+  if (props === undefined) return undefined;
+
+  return props[propName];
+};
+
+Registry.prototype.getItemTexture = function(name) {
   // TODO: default for missing texture
   textureName = 'gravel';
 
-  if (props) {
-    var textureName = props.itemTexture;
+  var textureName = this.getProp(name, 'itemTexture');
 
-    if (textureName === undefined) {
-      if (props.texture !== undefined) {
-        // no item texture, use block texture
-        // 3D CSS cube using https://github.com/deathcap/cube-icon
-        return toArray(props.texture).map(this.getTextureURL);
-      }
+  if (textureName === undefined) {
+    var blockTexture = this.getProp(name, 'texture');
+
+    if (blockTexture !== undefined) {
+      // no item texture, use block texture
+      // 3D CSS cube using https://github.com/deathcap/cube-icon
+      return toArray(blockTexture).map(this.getTextureURL);
     }
   }
 
@@ -113,11 +119,9 @@ Registry.prototype.getItemTexture = function(name) {
 };
 
 Registry.prototype.getItemDisplayName = function(name) {
-  var props = this.getItemProps(name);
-  
-  if (!props) return '<unknown>';
+  var displayName = this.getProp(name, 'displayName');
 
-  if (props.displayName) return props.displayName;
+  if (displayName !== undefined) return displayName;
 
   // default is initial-uppercased internal name
   var initialCap = name.substr(0, 1).toUpperCase();
