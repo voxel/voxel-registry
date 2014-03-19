@@ -23,7 +23,8 @@ translate between IDs and names using this module (see the source for details).
 Property names can be anything, but the following conventions are known:
 
 * texture: textures for rendering voxels
-* hardness: required time to mine the block, used by [voxel-mine](https://github.com/deathcap/voxel-mine)
+* hardness: required time (seconds) to mine the block with no tool, used by [voxel-mine](https://github.com/deathcap/voxel-mine)
+* effectiveTool: tool class name which gives a speedup when mining, used by [voxel-mine](https://github.com/deathcap/voxel-mine)
 * itemDrop: name of item to drop when block is harvested, used by [voxel-harvest](https://github.com/deathcap/voxel-harvest)
 
 
@@ -33,6 +34,8 @@ Items are registered similarly:
 
 * itemTexture: texture for rendering in an [inventory-window](https://github.com/deathcap/inventory-window)
 * maxDamage: maximum damage before a tool breaks, used by [voxel-harvest](https://github.com/deathcap/voxel-harvest), [inventory-window](https://github.com/deathcap/inventory-window)
+* toolClass: general category of the tool, matches `effectiveTool`, used by [voxel-mine](https://github.com/deathcap/voxel-mine)
+* speed: mining speedup multiplier when `toolClass` matches `effectiveTool`, used by [voxel-mine](https://github.com/deathcap/voxel-mine)
 
 Blocks are implicitly considered items.
 
