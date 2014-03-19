@@ -28,7 +28,7 @@ Registry.prototype.registerBlock = function(name, props) {
 };
 
 Registry.prototype.registerBlocks = function(name, count, props) {
-  var startIndex = this.registerBlock(name + '#0', props);
+  var startIndex = this.registerBlock(props.names && props.names[0] || name + '#0', props); // TODO: just 'name' instead? (no suffix)
   var lastIndex = startIndex;
 
   // register this many blocks
@@ -39,7 +39,8 @@ Registry.prototype.registerBlocks = function(name, count, props) {
   };
 
   for (var i = 1; i < count; i += 1) {
-    var thisIndex = this.registerBlock(name + '#' + i, props); // same props for all
+    var thisName = props.names && props.names[i] || name + '#' + i; // TODO: take in array as name instead of a 'names' property?
+    var thisIndex = this.registerBlock(thisName, props); // unique name and index, but same props for all
 
     lastIndex = thisIndex;
   }
