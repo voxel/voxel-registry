@@ -81,6 +81,28 @@ Registry.prototype.getBlockBaseName = function(name) {
   return this.getBlockName(props.baseIndex);
 }
 
+Registry.prototype.changeBlockMeta = function(name, meta) {
+  var baseIndex = (typeof name === 'number') ? name : this.getBlockIndex(name);
+  if (baseIndex === undefined) {
+    throw new Error('setBlockMeta('+name+','+meta+'): invalid block name');
+  }
+
+  var props = this.blockProps[baseIndex];
+  if (!props || props.baseIndex === undefined) {
+    throw new Error('setBlockMeta('+name+','+meta+'): not a metablock');
+  }
+  baseIndex = props.baseIndex; // might be the same, but can change already-existing metadata, too
+
+  if (meta < 0 || meta > props.lastIndex) {
+    throw new Error('setBlockMeta('+name+','+meta+'): out of range 0-'+props.lastIndex);
+  }
+
+  var blockIndex = baseIndex + meta;
+
+  return blockIndex;
+}
+
+
 
 // @deprecated in favor of getBlockIndex
 Registry.prototype.getBlockID = function(name) {
