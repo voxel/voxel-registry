@@ -54,8 +54,10 @@ Sometimes it is desirable to associate a small amount of extra data with a block
 
 where `count` is the number of "states" needed. Dynamic property functions
 will be called with each corresponding metadata value (for example, count=16
-corresponds to 0 to 15) as the argument. For a demonstration of this API in
-action, see the [voxel-wool](https://github.com/deathcap/voxel-wool) plugin.
+corresponds to 0 to 15) as the argument. For examples of this API in
+action, see the
+[voxel-pumpkin](https://github.com/deathcap/voxel-pumpkin) and
+[voxel-wool](https://github.com/deathcap/voxel-wool) plugins.
 
 Internally, `count` blocks are registered with identical `props`, and
 the index offset is used as the metadata/state, so `count` should be a
