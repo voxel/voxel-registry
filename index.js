@@ -49,6 +49,39 @@ Registry.prototype.registerBlocks = function(name, count, props) {
   props.lastIndex = lastIndex;
 };
 
+Registry.prototype.getBlockMeta = function(name) {
+  var blockIndex = (typeof name === 'number') ? name : this.getBlockIndex(name);
+  if (blockIndex === undefined) {
+    return undefined;
+  }
+
+  var props = this.blockProps[blockIndex];
+  if (!props) {
+    return undefined;
+  }
+
+  if (props.baseIndex === undefined) {
+    return undefined; // no metadata for this block type
+  }
+
+  return blockIndex - props.baseIndex;
+};
+
+Registry.prototype.getBlockBaseName = function(name) {
+  var blockIndex = (typeof name === 'number') ? name : this.getBlockIndex(name);
+  if (blockIndex === undefined) {
+    throw new Error('getBlockBaseName('+name+'): invalid block name');
+  }
+
+  var props = this.blockProps[blockIndex];
+  if (!props || props.baseIndex === undefined) {
+    return undefined;
+  }
+
+  return this.getBlockName(props.baseIndex);
+}
+
+
 // @deprecated in favor of getBlockIndex
 Registry.prototype.getBlockID = function(name) {
   return this.getBlockIndex(name);
