@@ -191,7 +191,7 @@ Registry.prototype.getItemTexture = function(name) {
   }
 
   // returns a Blob URL, could point inside a zipped pack
-  return this.getTextureURL(textureName);
+  return Array.isArray(textureName) ? textureName.map(this.getTextureURL) : this.getTextureURL(textureName);
 };
 
 Registry.prototype.getItemDisplayName = function(name) {
