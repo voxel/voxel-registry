@@ -8,11 +8,11 @@ test('register block', function(t) {
   var registry = createRegistry(); // doesn't need game nor opts
 
   registry.registerBlock('dirt', {});
-  t.equals(registry.getBlockID('dirt'), 1); // note: actual number is implementation detail
+  t.equals(registry.getBlockIndex('dirt'), 1); // note: actual number is implementation detail
   t.equals(registry.getBlockName(1), 'dirt');
 
   registry.registerBlock('grass', {});
-  t.equals(registry.getBlockID('grass'), 2);
+  t.equals(registry.getBlockIndex('grass'), 2);
   t.equals(registry.getBlockName(2), 'grass');
 
   t.end();
@@ -55,10 +55,10 @@ test('register blocks', function(t) {
   t.equals(registry.getBlockProps('fence#0'), registry.getBlockProps('fence#3'));
 
   // index offsets
-  t.equals(registry.getBlockID('fence#0') - registry.getBlockProps('fence#0').baseIndex, 0);
-  t.equals(registry.getBlockID('fence#1') - registry.getBlockProps('fence#1').baseIndex, 1);
-  t.equals(registry.getBlockID('fence#2') - registry.getBlockProps('fence#2').baseIndex, 2);
-  t.equals(registry.getBlockID('fence#3') - registry.getBlockProps('fence#3').baseIndex, 3);
+  t.equals(registry.getBlockIndex('fence#0') - registry.getBlockProps('fence#0').baseIndex, 0);
+  t.equals(registry.getBlockIndex('fence#1') - registry.getBlockProps('fence#1').baseIndex, 1);
+  t.equals(registry.getBlockIndex('fence#2') - registry.getBlockProps('fence#2').baseIndex, 2);
+  t.equals(registry.getBlockIndex('fence#3') - registry.getBlockProps('fence#3').baseIndex, 3);
   t.end()
 });
 

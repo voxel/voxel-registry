@@ -103,12 +103,6 @@ Registry.prototype.changeBlockMeta = function(name, meta) {
 }
 
 
-
-// @deprecated in favor of getBlockIndex
-Registry.prototype.getBlockID = function(name) {
-  return this.getBlockIndex(name);
-};
-
 Registry.prototype.getBlockIndex = function(name) {
   return this.blockName2Index[name];
 };
