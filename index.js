@@ -141,7 +141,7 @@ Registry.prototype.getItemProps = function(name) {
 };
 
 
-Registry.prototype.getProp = function(itemName, propName) {
+Registry.prototype.getProp = function(itemName, propName, arg) {
   var props;
 
   if (typeof itemName === 'number') {
@@ -158,24 +158,25 @@ Registry.prototype.getProp = function(itemName, propName) {
     // dynamic properties
     var index = (typeof itemName === 'number') ? itemName : this.getBlockIndex(itemName);
     if (index)  {
-      // call blocks with index offset argument
-      value = value.call(props, index - (props.baseIndex || index));
+      // call metablocks with index offset argument
+      value = value.call(props, index - (props.baseIndex || index), arg);
     } else {
-      value = value.call(props);
+      // call with optional argument, if any (can be used for items)
+      value = value.call(props, arg);
     }
   }
 
   return value;
 };
 
-Registry.prototype.getItemTexture = function(name) {
+Registry.prototype.getItemTexture = function(name, tags) {
   // TODO: default for missing texture
   textureName = 'gravel';
 
-  var textureName = this.getProp(name, 'itemTexture');
+  var textureName = this.getProp(name, 'itemTexture', tags);
 
   if (textureName === undefined) {
-    var blockTexture = this.getProp(name, 'texture');
+    var blockTexture = this.getProp(name, 'texture', tags);
 
     if (blockTexture !== undefined) {
       // no item texture, use block texture
@@ -200,7 +201,7 @@ Registry.prototype.getItemDisplayName = function(name) {
 };
 
 Registry.prototype.getItemPileTexture = function(itemPile) {
-  return this.getItemTexture(itemPile.item);
+  return this.getItemTexture(itemPile.item, itemPile.tags);
 };
 
 // return true if this name is a block, false otherwise (may be an item)
