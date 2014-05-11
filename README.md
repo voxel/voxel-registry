@@ -36,13 +36,25 @@ Items are registered similarly:
 * maxDamage: maximum damage before a tool breaks, used by [voxel-harvest](https://github.com/deathcap/voxel-harvest), [inventory-window](https://github.com/deathcap/inventory-window)
 * toolClass: general category of the tool, matches `effectiveTool`, used by [voxel-mine](https://github.com/deathcap/voxel-mine)
 * speed: mining speedup multiplier when `toolClass` matches `effectiveTool`, used by [voxel-mine](https://github.com/deathcap/voxel-mine)
+* displayName: human-readable name for GUI displays, returned by `getItemDisplayName(name)`
 
 Blocks are implicitly considered items.
 
 ### Dynamic properties
 
-If a property value is set to a function, then `registry.getProp(itemName, propName)`
-will execute the function and return the result.
+If a property value is set to a function, then `registry.getProp(itemName, propName[, arg])`
+will execute the function and return the result. If `arg` is given it will be passed to the function.
+
+### Item textures
+
+`getItemPileTexture(itemPile)` gets the texture URL(s) for an
+[itempile](https://github.com/deathcap/itempile) for display in GUIs.
+If the texture is a 3D cube, this will be an array for each face, otherwise a string.
+Texture URLs are resolved through `game.materials.artPacks`, assumed to be an instance
+of [artpacks](https://github.com/deathcap/artpacks).
+
+If `itemTexture` or `texture` is a dynamic property, then it will
+be called with the item pile's `tags` as an argument.
 
 ### Metablocks and states
 
