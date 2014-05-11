@@ -179,12 +179,12 @@ Registry.prototype.getItemTexture = function(name, tags) {
     if (blockTexture !== undefined) {
       // no item texture, use block texture
       // 3D CSS cube using https://github.com/deathcap/cube-icon
-      return toArray(blockTexture).map(this.getTextureURL);
+      return toArray(blockTexture).map(this.getTextureURL.bind(this));
     }
   }
 
   // returns a Blob URL, could point inside a zipped pack
-  return Array.isArray(textureName) ? textureName.map(this.getTextureURL) : this.getTextureURL(textureName);
+  return Array.isArray(textureName) ? textureName.map(this.getTextureURL.bind(this)) : this.getTextureURL(textureName);
 };
 
 Registry.prototype.getItemDisplayName = function(name) {
