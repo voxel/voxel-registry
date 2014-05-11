@@ -2,6 +2,7 @@
   "name": "voxel-registry",
   "description": "",
   "version": "0.4.0",
+  "main": "registry.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:deathcap/voxel-registry.git"
