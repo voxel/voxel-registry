@@ -1,3 +1,4 @@
+'use strict';
 
 var toArray = require('toarray');
 
@@ -79,7 +80,7 @@ Registry.prototype.getBlockBaseName = function(name) {
   }
 
   return this.getBlockName(props.baseIndex);
-}
+};
 
 Registry.prototype.changeBlockMeta = function(name, meta) {
   var baseIndex = (typeof name === 'number') ? name : this.getBlockIndex(name);
@@ -100,7 +101,7 @@ Registry.prototype.changeBlockMeta = function(name, meta) {
   var blockIndex = baseIndex + meta;
 
   return blockIndex;
-}
+};
 
 
 Registry.prototype.getBlockIndex = function(name) {
@@ -170,9 +171,6 @@ Registry.prototype.getProp = function(itemName, propName, arg) {
 };
 
 Registry.prototype.getItemTexture = function(name, tags) {
-  // TODO: default for missing texture
-  textureName = 'gravel';
-
   var textureName = this.getProp(name, 'itemTexture', tags);
 
   if (textureName === undefined) {
