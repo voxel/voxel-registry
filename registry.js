@@ -5,17 +5,12 @@ var toArray = require('toarray');
 module.exports = function(game, opts) {
   return new Registry(game, opts);
 };
-module.exports.pluginInfo = {
-  loadAfter: ['voxel-mesher'] // optional, indicates opaque bit needed on non-transparent blocks (packed index)
-};
 
 function Registry(game, opts) {
   this.game = game;
 
   opts = opts || {};
 
-  this.opaqueBit = opts.opaqueBit !== undefined ? opts.opaqueBit : (game && game.plugins && game.plugins.get('voxel-mesher') ? (1<<15) : 0);
-  this.indexMask = opts.indexMask !== undefined ? opts.indexMask : (this.opaqueBit - 1);
   this.blockProps = [ {} ];
   this.blockName2Index = { air:0 };
   this.blockIndex2Name = ['air'];
@@ -115,12 +110,13 @@ Registry.prototype.getBlockIndex = function(name) {
   return this.blockName2Index[name];
 };
 
+// deprecated - now same as getBlockIndex (no more packed opaque bit here)
 Registry.prototype.getPackedBlockIndex = function(name) {
-  return this.getBlockIndex(name) | (this.getProp(name, 'transparent') ? 0 : this.opaqueBit);
+  return this.getBlockIndex(name);
 };
 
 Registry.prototype.getBlockName = function(blockIndex) {
-  var name = this.blockIndex2Name[blockIndex & this.indexMask];
+  var name = this.blockIndex2Name[blockIndex];
     
   return name ? name : '<index #'+blockIndex+'>';
 };
