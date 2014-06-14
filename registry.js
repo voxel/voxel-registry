@@ -1,7 +1,5 @@
 'use strict';
 
-var toArray = require('toarray');
-
 module.exports = function(game, opts) {
   return new Registry(game, opts);
 };
@@ -180,6 +178,10 @@ Registry.prototype.getItemTexture = function(name, tags) {
 
     if (blockTexture !== undefined) {
       // no item texture, use block texture
+
+      // block textures are 3D cubes by default
+      if (typeof blockTexture === 'string') blockTexture = [blockTexture];
+
       // 3D CSS cube using https://github.com/deathcap/cube-icon
       return this._getTextureURLs(blockTexture);
     }
