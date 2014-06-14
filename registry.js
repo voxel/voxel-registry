@@ -186,12 +186,34 @@ Registry.prototype.getItemTexture = function(name, tags) {
     if (blockTexture !== undefined) {
       // no item texture, use block texture
       // 3D CSS cube using https://github.com/deathcap/cube-icon
-      return toArray(blockTexture).map(this.getTextureURL.bind(this));
+      return this._getTextureURLs(blockTexture);
     }
   }
 
   // returns a Blob URL, could point inside a zipped pack
-  return Array.isArray(textureName) ? textureName.map(this.getTextureURL.bind(this)) : this.getTextureURL(textureName);
+  return this._getTextureURLs(textureName);
+};
+
+// Resolve texture names to URLs in an object - either a string, array, or object
+Registry.prototype._getTextureURLs = function(names) {
+  var out;
+  if (Array.isArray(names)) {
+    out = names.map(this.getTextureURL.bind(this));
+  } else if (typeof names === 'string') {
+    out = this.getTextureURL(names);
+  } else if (names.top || names.left || names.front) {
+    out = {};
+    var keys = Object.keys(names);
+    for (var i = 0; i < keys.length; ++i) {
+      var key = keys[i];
+      out[key] = this.getTextureURL(names[key]);
+    }
+  } else {
+    console.warn('voxel-registry _getTextureURLs invald name object (try a string):'+name);
+    throw new Error('voxel-registry _getTextureURLs invald name object (try a string):'+name);
+  }
+
+  return out;
 };
 
 Registry.prototype.getItemDisplayName = function(name) {
