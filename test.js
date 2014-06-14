@@ -111,27 +111,3 @@ test('but items not necessarily blocks', function(t) {
   t.end();
 });
 
-test('packed index opaque', function(t) {
-  var r2 = createRegistry();
-  t.equal(r2.opaqueBit, 0);
-
-  var r = createRegistry({plugins:
-    {
-      // simulate loaded plugin
-      get: function(name) {
-        if (name === 'voxel-mesher') return {};
-      }
-    }
-  });
-  t.equals(r.opaqueBit, 1<<15);
-
-  r.registerBlock('stone', {});
-  r.registerBlock('glass', {transparent:true});
-
-  t.equals(!!(r.getPackedBlockIndex('stone') & r.opaqueBit), true);
-  t.equals(!!(r.getPackedBlockIndex('glass') & r.opaqueBit), false);
-
-  console.log(r.getPackedBlockIndex('stone'), r.getPackedBlockIndex('glass'));
-
-  t.end();
-});
