@@ -110,11 +110,6 @@ Registry.prototype.getBlockIndex = function(name) {
   return this.blockName2Index[name];
 };
 
-// deprecated - now same as getBlockIndex (no more packed opaque bit here)
-Registry.prototype.getPackedBlockIndex = function(name) {
-  return this.getBlockIndex(name);
-};
-
 Registry.prototype.getBlockName = function(blockIndex) {
   var name = this.blockIndex2Name[blockIndex];
     
