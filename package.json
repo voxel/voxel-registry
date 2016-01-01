@@ -5,7 +5,7 @@
   "main": "registry.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:deathcap/voxel-registry.git"
+    "url": "git@github.com:voxel/voxel-registry.git"
   },
   "keywords": [
     "voxel",
