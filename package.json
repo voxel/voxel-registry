@@ -1,7 +1,7 @@
 {
   "name": "voxel-registry",
   "description": "",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "main": "registry.js",
   "repository": {
     "type": "git",
