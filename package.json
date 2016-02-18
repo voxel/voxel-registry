@@ -14,7 +14,7 @@
     "blocks"
   ],
   "devDependencies": {
-    "tape": "2.3.0"
+    "tape": "4.4.0"
   },
   "scripts": {
     "test": "node test.js"
